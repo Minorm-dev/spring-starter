@@ -13,7 +13,9 @@
 <!--        <property name="locations" value="classpath:application.properties"/>-->
 <!--    </bean>-->
 
-<!--    ${} <- expression language -->
+    <bean class="com.minorm.spring.bfpp.LogBeanFactoryPostProcessor"/>
+    <bean class="com.minorm.spring.bfpp.VerifyPropertyBeanFactoryPostProcessor"/>
+
     <bean id="driver" class="java.lang.String">
         <constructor-arg type="java.lang.String" value="${db.driver}"/>
     </bean>
@@ -33,7 +35,6 @@
                 <ref bean="driver"/>
             </list>
         </constructor-arg>
-<!--        #{} <- SPeL Spring Expression Language-->
         <property name="properties">
             <map>
                 <entry key="url" value="postgresurl"/>
