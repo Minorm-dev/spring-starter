@@ -11,6 +11,8 @@
     <context:annotation-config/>
 
     <bean class="com.minorm.spring.bpp.InjectBeanPostProcessor"/>
+    <bean class="com.minorm.spring.bpp.TransactionBeanPostProcessor"/>
+    <bean class="com.minorm.spring.bpp.AuditingBeanPostProcessor"/>
 <!--Вместо этого кода используем property-placeholder-->
 <!--    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">-->
 <!--        <property name="locations" value="classpath:application.properties"/>-->

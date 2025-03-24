@@ -2,6 +2,7 @@ package com.minorm.spring;
 
 import com.minorm.spring.database.pool.ConnectionPool;
 import com.minorm.spring.database.repository.CompanyRepository;
+import com.minorm.spring.database.repository.CrudRepository;
 import com.minorm.spring.database.repository.UserRepository;
 import com.minorm.spring.ioc.Container;
 import com.minorm.spring.service.UserService;
@@ -23,8 +24,8 @@ public class ApplicationRunner {
             System.out.println(connectionPool);
 
 
-            var companyRepository = context.getBean("companyRepository", CompanyRepository.class);
-            System.out.println(companyRepository);
+            var companyRepository = context.getBean("companyRepository", CrudRepository.class);
+            System.out.println(companyRepository.findById(1));
         }
     }
 }
