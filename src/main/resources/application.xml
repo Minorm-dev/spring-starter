@@ -20,7 +20,7 @@
 <!--                        Существует пять фильтров:
                             annotation, assignable, regex, aspectj, custom-->
 
-    <context:property-placeholder location="classpath:application.properties"/>
+<!--    <context:property-placeholder location="classpath:application.properties"/>-->
 
 <!--Вместо этого кода используем property-placeholder-->
 <!--    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">-->
