@@ -36,6 +36,8 @@ public class ApplicationConfiguration {
         }
 
         @Bean
+        @Profile("prod|web")
+//        ! & |  <- can use with these profiles
         public UserRepository userRepository2(ConnectionPool pool2) {
                 return new UserRepository(pool2);
         }
