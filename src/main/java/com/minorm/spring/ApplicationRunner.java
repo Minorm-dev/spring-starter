@@ -6,6 +6,7 @@ import com.minorm.spring.database.repository.CompanyRepository;
 import com.minorm.spring.database.repository.CrudRepository;
 import com.minorm.spring.database.repository.UserRepository;
 import com.minorm.spring.ioc.Container;
+import com.minorm.spring.service.CompanyService;
 import com.minorm.spring.service.UserService;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -29,8 +30,8 @@ public class ApplicationRunner {
             System.out.println(connectionPool);
 
 
-            var companyRepository = context.getBean("companyRepository", CrudRepository.class);
-            System.out.println(companyRepository.findById(1));
+            var companyService = context.getBean(CompanyService.class);
+            System.out.println(companyService.findById(1));
         }
     }
 }
