@@ -1,0 +1,8 @@
+2025-03-27T02:10:08.425+03:00  INFO 5932 --- [main] c.m.spring.database.pool.ConnectionPool  : Init connection pool
+2025-03-27T02:10:08.433+03:00  INFO 5932 --- [main] c.m.spring.database.pool.ConnectionPool  : Init connection pool
+2025-03-27T02:10:08.441+03:00  INFO 5932 --- [main] c.m.spring.database.pool.ConnectionPool  : Init connection pool
+2025-03-27T02:10:08.441+03:00  WARN 5932 --- [main] c.m.s.d.repository.CompanyRepository     : init company repository
+2025-03-27T02:10:08.449+03:00  WARN 5932 --- [main] c.m.s.d.repository.CompanyRepository     : init company repository
+2025-03-27T02:10:09.332+03:00  INFO 5932 --- [SpringApplicationShutdownHook] c.m.spring.database.pool.ConnectionPool  : Clean connection pool
+2025-03-27T02:10:09.373+03:00  INFO 5932 --- [SpringApplicationShutdownHook] c.m.spring.database.pool.ConnectionPool  : Clean connection pool
+2025-03-27T02:10:09.373+03:00  INFO 5932 --- [SpringApplicationShutdownHook] c.m.spring.database.pool.ConnectionPool  : Clean connection pool
