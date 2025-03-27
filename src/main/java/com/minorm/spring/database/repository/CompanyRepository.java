@@ -34,7 +34,7 @@ public class CompanyRepository implements CrudRepository<Integer, Company> {
 
     @PostConstruct
     private void init() {
-        log.warn("init company repository");
+        log.info("init company repository");
     }
 
     @Override

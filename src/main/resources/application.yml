@@ -20,10 +20,10 @@ db:
       timeout: 3
 spring.profiles.active: qa
 
-logging:
-  level:
-    root: WARN
-    com.minorm.spring.database.pool.ConnectionPool: INFO
-  file:
-    name: minorm.log
-    path: /
+#logging:
+#  level:
+#    root: WARN
+#    com.minorm.spring.database.pool.ConnectionPool: INFO
+#  file:
+#    name: minorm.log
+#    path: /
