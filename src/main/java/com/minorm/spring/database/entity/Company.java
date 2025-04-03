@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 import java.util.HashMap;
 import java.util.Map;
 
+@NamedQuery( // Такие запросы должны быть в сущности
+        name = "Company.findByName",
+        query = "select c from Company c where lower(c.name) = lower(:name2)"
+)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
