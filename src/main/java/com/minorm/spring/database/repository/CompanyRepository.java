@@ -1,16 +1,16 @@
 package com.minorm.spring.database.repository;
 
 import com.minorm.spring.database.entity.Company;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-
+import java.util.List;
 import java.util.Optional;
 
-public interface CompanyRepository extends CrudRepository<Company, Integer> {
+public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
+    // Optional, Entity, Future <- can use, but Optional better
+    Optional<Company> findByName(String name);
 
-    public Optional<Company> findById(Integer id);
-
-    public void delete(Company entity);
+    // Collection, Stream (batch, close)
+    List<Company> findAllByNameContainingIgnoreCase(String fragment);
 }
