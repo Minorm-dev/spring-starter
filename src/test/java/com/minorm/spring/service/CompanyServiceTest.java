@@ -1,7 +1,7 @@
 package com.minorm.spring.service;
 
 import com.minorm.spring.database.entity.Company;
-import com.minorm.spring.database.repository.CrudRepository;
+import com.minorm.spring.database.repository.CompanyRepository;
 import com.minorm.spring.dto.CompanyReadDto;
 import com.minorm.spring.listener.entity.EntityEvent;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ class CompanyServiceTest {
     private static final Integer COMPANY_ID = 1;
 
     @Mock
-    private CrudRepository<Integer, Company> companyRepository;
+    private CompanyRepository companyRepository;
     @Mock
     private UserService userService;
     @Mock

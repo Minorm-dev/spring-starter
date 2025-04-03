@@ -1,6 +1,7 @@
 package com.minorm.spring.integration.database.repository;
 
 import com.minorm.spring.database.entity.Company;
+import com.minorm.spring.database.repository.CompanyRepository;
 import com.minorm.spring.integration.annotation.IT;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,8 +22,19 @@ import static org.junit.jupiter.api.Assertions.*;
 @RequiredArgsConstructor
 class CompanyRepositoryTest {
 
+    public static final Integer APPLE_ID = 5;
     private final EntityManager entityManager;
     private final TransactionTemplate transactionTemplate;
+    private final CompanyRepository companyRepository;
+
+    @Test
+    void delete() {
+        var maybeCompany = companyRepository.findById(APPLE_ID);
+        assertTrue(maybeCompany.isPresent());
+        maybeCompany.ifPresent(companyRepository :: delete);
+        entityManager.flush();
+        assertTrue(companyRepository.findById(APPLE_ID).isEmpty());
+    }
 
     @Test
     void findById() {

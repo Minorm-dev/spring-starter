@@ -1,7 +1,7 @@
 package com.minorm.spring.service;
 
 import com.minorm.spring.database.entity.Company;
-import com.minorm.spring.database.repository.CrudRepository;
+import com.minorm.spring.database.repository.CompanyRepository;
 import com.minorm.spring.dto.CompanyReadDto;
 import com.minorm.spring.listener.entity.AccessType;
 import com.minorm.spring.listener.entity.EntityEvent;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CompanyService {
 
-    private final CrudRepository<Integer, Company> companyRepository;
+    private final CompanyRepository companyRepository;
     private final UserService userService;
     private final ApplicationEventPublisher eventPublisher;
 

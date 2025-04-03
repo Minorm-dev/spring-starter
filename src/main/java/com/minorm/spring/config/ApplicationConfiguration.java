@@ -1,7 +1,6 @@
 package com.minorm.spring.config;
 
 import com.minorm.spring.database.pool.ConnectionPool;
-import com.minorm.spring.database.repository.CrudRepository;
 import com.minorm.spring.database.repository.UserRepository;
 import com.minorm.web.config.WebConfiguration;
 import org.springframework.beans.factory.annotation.Value;
