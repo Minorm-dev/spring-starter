@@ -2,7 +2,6 @@ package com.minorm.spring.database.repository;
 
 import com.minorm.spring.database.entity.Role;
 import com.minorm.spring.database.entity.User;
-import com.minorm.spring.dto.PersonalInfo;
 import com.minorm.spring.dto.PersonalInfo2;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.QueryHint;
@@ -17,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>, FilterUserRepository {
 
     @Query("select u from User u " +
            "where u.firstname like %:firstname% and u.lastname like %:lastname%")
@@ -35,16 +34,18 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findTopByOrderByIdDesc();
 
-    @QueryHints(@QueryHint(name = "org.hibernate.fetchSize", value= "50"))
-    @Lock(LockModeType.PESSIMISTIC_WRITE) // Нужен для установки блокировки на уровне строк
+    @QueryHints(@QueryHint(name = "org.hibernate.fetchSize", value = "50"))
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+        // Нужен для установки блокировки на уровне строк
     List<User> findTop3ByBirthDateBefore(LocalDate birthDate, Sort sort);
 
     // Collection, Stream
     // Streamable, Slice, Page если не нужно кол-во страниц, то используется Slice
 //    @EntityGraph("User.company")
-    @EntityGraph(attributePaths = {"company", "company.locales"}) // В данном случае Pageable не будет работать, т.к Spring будет подтягивать всех юзеров
+    @EntityGraph(attributePaths = {"company", "company.locales"})
+    // В данном случае Pageable не будет работать, т.к Spring будет подтягивать всех юзеров
     @Query(value = "select u from User u",
-    countQuery = "select count(distinct u.firstname) from User u")
+            countQuery = "select count(distinct u.firstname) from User u")
     Page<User> findAllBy(Pageable pageable);
 
 //    List<PersonalInfo> findAllByCompanyId(Integer companyId);
@@ -56,7 +57,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
                    "lastname," +
                    "birth_date birthDate " +
                    "FROM users " +
-                   "WHERE company_id = :companyId"
-            ,nativeQuery = true)
+                   "WHERE company_id = :companyId",
+            nativeQuery = true)
     List<PersonalInfo2> findAllByCompanyId(Integer companyId);
 }
