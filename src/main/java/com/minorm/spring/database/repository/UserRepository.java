@@ -4,8 +4,8 @@ import com.minorm.spring.database.entity.Role;
 import com.minorm.spring.database.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -38,8 +38,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // Collection, Stream
     // Streamable, Slice, Page если не нужно кол-во страниц, то используется Slice
+//    @EntityGraph("User.company")
+    @EntityGraph(attributePaths = {"company", "company.locales"}) // В данном случае Pageable не будет работать, т.к Spring будет подтягивать всех юзеров
     @Query(value = "select u from User u",
     countQuery = "select count(distinct u.firstname) from User u")
     Page<User> findAllBy(Pageable pageable);
-
 }
