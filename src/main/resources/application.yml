@@ -37,3 +37,4 @@ logging:
   level:
     root: INFO
     com.minorm.spring.database.pool.ConnectionPool: INFO
+    org.springframework.jdbc.core: TRACE

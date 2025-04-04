@@ -3,6 +3,7 @@ package com.minorm.spring.integration.database.repository;
 import com.minorm.spring.database.entity.Role;
 import com.minorm.spring.database.entity.User;
 import com.minorm.spring.database.repository.UserRepository;
+import com.minorm.spring.dto.PersonalInfo;
 import com.minorm.spring.dto.UserFilter;
 import com.minorm.spring.integration.annotation.IT;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,6 +23,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserRepositoryTest {
 
     private final UserRepository userRepository;
+
+    @Test
+    void checkJdbcTemplate(){
+        var users = userRepository.findAllByCompanyIdAndRole(1, Role.USER);
+        assertThat(users).hasSize(1);
+    }
 
     @Test
     @Commit
