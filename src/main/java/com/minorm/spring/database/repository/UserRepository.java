@@ -2,6 +2,8 @@ package com.minorm.spring.database.repository;
 
 import com.minorm.spring.database.entity.Role;
 import com.minorm.spring.database.entity.User;
+import com.minorm.spring.dto.PersonalInfo;
+import com.minorm.spring.dto.PersonalInfo2;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.QueryHint;
 import org.springframework.data.domain.Page;
@@ -44,4 +46,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select u from User u",
     countQuery = "select count(distinct u.firstname) from User u")
     Page<User> findAllBy(Pageable pageable);
+
+//    List<PersonalInfo> findAllByCompanyId(Integer companyId);
+
+    // Проекции нужны для работы с нативными запросами
+//    <T> List<T> findAllByCompanyId(Integer companyId, Class<T> clazz);
+
+    @Query(value = "SELECT firstname," +
+                   "lastname," +
+                   "birth_date birthDate " +
+                   "FROM users " +
+                   "WHERE company_id = :companyId"
+            ,nativeQuery = true)
+    List<PersonalInfo2> findAllByCompanyId(Integer companyId);
 }

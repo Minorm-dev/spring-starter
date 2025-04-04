@@ -3,6 +3,7 @@ package com.minorm.spring.integration.database.repository;
 import com.minorm.spring.database.entity.Role;
 import com.minorm.spring.database.entity.User;
 import com.minorm.spring.database.repository.UserRepository;
+import com.minorm.spring.dto.PersonalInfo;
 import com.minorm.spring.integration.annotation.IT;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,6 +21,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserRepositoryTest {
 
     private final UserRepository userRepository;
+
+    @Test
+    void checkProjections(){
+        var users = userRepository.findAllByCompanyId(1);
+        assertThat(users).hasSize(2);
+    }
 
     @Test
     void checkPageable(){
