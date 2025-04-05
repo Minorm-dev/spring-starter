@@ -29,6 +29,7 @@ dependencies {
     implementation 'org.postgresql:postgresql'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.data:spring-data-envers'
+    implementation 'org.liquibase:liquibase-core'
 
 //    implementation "com.querydsl:querydsl-jpa:${querydslVersion}:jakarta"
 //    annotationProcessor "com.querydsl:querydsl-apt:${querydslVersion}:jakarta"
