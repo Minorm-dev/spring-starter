@@ -26,7 +26,7 @@ public class CompanyServiceIT {
 
         assertTrue(actualResult.isPresent());
 
-        var expectedResutl = new CompanyReadDto(COMPANY_ID);
+        var expectedResutl = new CompanyReadDto(COMPANY_ID, null);
         actualResult.ifPresent(actual -> assertEquals(expectedResutl, actual));
 
     }
