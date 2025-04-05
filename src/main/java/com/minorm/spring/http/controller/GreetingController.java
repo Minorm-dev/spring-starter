@@ -1,25 +1,34 @@
 package com.minorm.spring.http.controller;
 
+import com.minorm.spring.database.entity.Role;
 import com.minorm.spring.dto.UserReadDto;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/v1")
 @SessionAttributes({"user"})
 public class GreetingController {
 
-    @GetMapping("/hello")
-    public ModelAndView hello(ModelAndView modelAndView, HttpServletRequest request) {
-//        request.getSession().setAttribute(); sessionScope
-//        request.setAttribute(); requestScope
-        modelAndView.setViewName("greeting/hello");
-        modelAndView.addObject("user", new UserReadDto(1L, "Ivan"));
+    @ModelAttribute("roles")
+    public List<Role> roles() {
+        return Arrays.asList(Role.values());
+    }
 
-        return modelAndView;
+    @GetMapping("/hello")
+    public String hello(Model model,
+                        HttpServletRequest request,
+                        @ModelAttribute("userReadDto") UserReadDto userReadDto) {
+        model.addAttribute("user", new UserReadDto(1L, "Ivan"));
+
+        return "greeting/hello";
     }
 
     @GetMapping("/hello/{id}")
@@ -38,11 +47,8 @@ public class GreetingController {
     }
 
     @GetMapping("/bye")
-    public ModelAndView bye(@SessionAttribute("user") UserReadDto user) {
-//        request.getSession().getAttribute("user")
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("greeting/bye");
+    public String bye(@SessionAttribute("user") UserReadDto user, Model model) {
 
-        return modelAndView;
+        return "greeting/bye";
     }
 }
