@@ -39,6 +39,7 @@ spring:
         jdbc:
           batch_size: 50
           fetch_size: 50
+    open-in-view: false
 
 logging:
   level:
