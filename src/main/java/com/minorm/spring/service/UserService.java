@@ -7,6 +7,7 @@ import com.minorm.spring.dto.UserReadDto;
 import com.minorm.spring.mapper.UserCreateEditMapper;
 import com.minorm.spring.mapper.UserReadMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ public class UserService {
     private final UserCreateEditMapper userCreateEditMapper;
 
     public List<UserReadDto> findAll(UserFilter filter) {
+//        userRepository.findAll();
         return userRepository.findAllByFilter(filter).stream()
                 .map(userReadMapper::map)
                 .toList();

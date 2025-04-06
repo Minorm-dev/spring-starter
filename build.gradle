@@ -8,9 +8,6 @@ plugins {
 
 apply from: 'version.gradle'
 
-//ext {
-//    querydslVersion = '5.0.0'
-//}
 
 group = 'com.minorm'
 version = '1.0-SNAPSHOT'
@@ -33,6 +30,14 @@ dependencies {
     implementation 'org.springframework.data:spring-data-envers'
     implementation 'org.liquibase:liquibase-core'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+//    implementation group: 'com.querydsl', name: 'querydsl-jpa', version: '5.0.0', classifier: 'jakarta'
+//    annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: '5.0.0', classifier: 'jakarta'
+//    annotationProcessor group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: '3.1.0'
+
+//    implementation 'com.querydsl:querydsl-jpa'
+//    implementation 'com.querydsl:querydsl-apt'
+//    implementation 'jakarta.persistence:jakarta.persistence-api'
 
 //    implementation "com.querydsl:querydsl-jpa:${querydslVersion}:jakarta"
 //    annotationProcessor "com.querydsl:querydsl-apt:${querydslVersion}:jakarta"

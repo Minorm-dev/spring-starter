@@ -1,4 +1,4 @@
-package com.minorm.spring.database.querydsl;
+package com.minorm.spring.querydsl;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ public class QPredicates {
 //        return new QPredicates();
 //    }
 //
-//    public <T> QPredicates add(T object, Function<T, Predicate> function) {
+//    public <T> QPredicates add (T object, Function<T, Predicate> function) {
 //        if (object != null) {
 //            predicates.add(function.apply(object));
 //        }

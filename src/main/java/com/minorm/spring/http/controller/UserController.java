@@ -3,9 +3,12 @@ package com.minorm.spring.http.controller;
 import com.minorm.spring.database.entity.Role;
 import com.minorm.spring.dto.UserCreateEditDto;
 import com.minorm.spring.dto.UserFilter;
+import com.minorm.spring.dto.UserReadDto;
 import com.minorm.spring.service.CompanyService;
 import com.minorm.spring.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +26,13 @@ public class UserController {
 
     @GetMapping
     public String findAll(Model model, UserFilter filter) {
-        // Для работы нужен QueryDsl ПОШЕЛ ОН НА ХУЙ
+//        var predicate = QPredicates.builder()
+//                .add(filter.firstname(), user.firstname::containsIgnoreCase)
+//                .add(filter.lastname(), user.lastname::containsIgnoreCase)
+//                .add(filter.birthDate(), user.birthDate::before)
+//                .build();
+//        userService.findAll(filter);
+
         model.addAttribute("users", userService.findAll(filter));
         return "user/users";
     }
