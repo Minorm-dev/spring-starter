@@ -21,6 +21,7 @@ public interface UserRepository extends
         JpaRepository<User, Long>,
         FilterUserRepository,
         RevisionRepository<User, Long, Integer>{
+//        QuerydslPredicateExecutor<User>
 
     @Query("select u from User u " +
            "where u.firstname like %:firstname% and u.lastname like %:lastname%")

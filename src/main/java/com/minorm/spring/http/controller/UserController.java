@@ -40,12 +40,12 @@ public class UserController {
     @GetMapping("/{id}")
     public String findById(@PathVariable Long id, Model model) {
         return userService.findById(id)
-                        .map(user -> {
-                            model.addAttribute("user", user);
-                            model.addAttribute("roles", Role.values());
-                            model.addAttribute("companies", companyService.findAll());
-                            return "user/user";
-                        })
+                .map(user -> {
+                    model.addAttribute("user", user);
+                    model.addAttribute("roles", Role.values());
+                    model.addAttribute("companies", companyService.findAll());
+                    return "user/user";
+                })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
     }
@@ -71,7 +71,7 @@ public class UserController {
     }
 
 
-//    @PutMapping("/{id}")
+    //    @PutMapping("/{id}")
     @PostMapping("/{id}/update")
     public String update(@PathVariable("id") Long id,
                          @ModelAttribute UserCreateEditDto user){
@@ -80,7 +80,7 @@ public class UserController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-//    @DeleteMapping("/{id}")
+    //    @DeleteMapping("/{id}")
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id){
         if (!userService.delete(id)) {
