@@ -34,13 +34,13 @@ class UserControllerTest extends IntegrationTestBase {
     @Test
     void create() throws Exception {
         mockMvc.perform(post("/users")
-                .param(username, "test@gmail.com")
-                .param(firstname, "test")
-                .param(lastname, "test")
-                .param(role, "ADMIN")
-                .param(companyId, "1")
-//                        .param(birthDate, "2000-01-01")
-        )
+                        .param(username, "test@gmail.com")
+                        .param(firstname, "test")
+                        .param(lastname, "test")
+                        .param(role, "ADMIN")
+                        .param(companyId, "1")
+                        .param(birthDate, "2000-01-01")
+                )
                 .andExpectAll(
                         status().is3xxRedirection(),
                         redirectedUrlPattern("/users/{\\d+}")
