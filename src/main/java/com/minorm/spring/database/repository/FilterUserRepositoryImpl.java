@@ -52,7 +52,34 @@ public class FilterUserRepositoryImpl implements FilterUserRepository {
     @Override
     public List<User> findAllByFilter(UserFilter filter) {
 
-
+//        var cb = entityManager.getCriteriaBuilder();
+//        var criteria = cb.createQuery(User.class);
+//        var user = criteria.from(User.class);  // Определяем корневую сущность для запроса
+//        criteria.select(user);  // Устанавливаем выборку - возвращаем сущности User
+//
+//        // Список предикатов для динамического построения фильтра
+//        List<Predicate> predicates = new ArrayList<>();
+//
+//        // Динамическая фильтрация по имени
+//        if (filter.firstname() != null && !filter.firstname().isEmpty()) {
+//            predicates.add(cb.like(user.get("firstname"), "%" + filter.firstname() + "%"));
+//        }
+//
+//        // Динамическая фильтрация по фамилии
+//        if (filter.lastname() != null && !filter.lastname().isEmpty()) {
+//            predicates.add(cb.like(user.get("lastname"), "%" + filter.lastname() + "%"));
+//        }
+//
+//        // Динамическая фильтрация по дате рождения (если filter.birthDate не null)
+//        if (filter.birthDate() != null) {
+//            predicates.add(cb.equal(user.get("birthDate"), filter.birthDate()));
+//        }
+//
+//        // Применение всех условий (предикатов) к запросу
+//        criteria.where(predicates.toArray(new Predicate[0]));
+//
+//        // Выполнение запроса и возврат результата
+//        return entityManager.createQuery(criteria).getResultList();
         var cb = entityManager.getCriteriaBuilder();
         var criteria = cb.createQuery(User.class);
 

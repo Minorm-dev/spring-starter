@@ -2,6 +2,7 @@ package com.minorm.spring.service;
 
 import com.minorm.spring.database.repository.UserRepository;
 import com.minorm.spring.dto.UserCreateEditDto;
+import com.minorm.spring.dto.UserFilter;
 import com.minorm.spring.dto.UserReadDto;
 import com.minorm.spring.mapper.UserCreateEditMapper;
 import com.minorm.spring.mapper.UserReadMapper;
@@ -20,6 +21,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserReadMapper userReadMapper;
     private final UserCreateEditMapper userCreateEditMapper;
+
+    public List<UserReadDto> findAll(UserFilter filter) {
+        return userRepository.findAllByFilter(filter).stream()
+                .map(userReadMapper::map)
+                .toList();
+    }
 
     public List<UserReadDto> findAll() {
         return userRepository.findAll().stream()

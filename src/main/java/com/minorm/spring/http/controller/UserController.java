@@ -2,6 +2,7 @@ package com.minorm.spring.http.controller;
 
 import com.minorm.spring.database.entity.Role;
 import com.minorm.spring.dto.UserCreateEditDto;
+import com.minorm.spring.dto.UserFilter;
 import com.minorm.spring.service.CompanyService;
 import com.minorm.spring.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +22,9 @@ public class UserController {
     private final CompanyService companyService;
 
     @GetMapping
-    public String findAll(Model model) {
-//        model.addAttribute("users", userService.findAll(filter));
-        model.addAttribute("users", userService.findAll());
+    public String findAll(Model model, UserFilter filter) {
+        // Для работы нужен QueryDsl ПОШЕЛ ОН НА ХУЙ
+        model.addAttribute("users", userService.findAll(filter));
         return "user/users";
     }
 
