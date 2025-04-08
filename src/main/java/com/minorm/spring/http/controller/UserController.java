@@ -3,15 +3,14 @@ package com.minorm.spring.http.controller;
 import com.minorm.spring.database.entity.Role;
 import com.minorm.spring.dto.UserCreateEditDto;
 import com.minorm.spring.dto.UserFilter;
-import com.minorm.spring.dto.UserReadDto;
 import com.minorm.spring.service.CompanyService;
 import com.minorm.spring.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -60,13 +59,14 @@ public class UserController {
 
     @PostMapping
 //    @ResponseStatus(HttpStatus.CREATED)
-    public String create(@ModelAttribute UserCreateEditDto user, RedirectAttributes redirectAttributes) {
-//        if (true) {
-//            redirectAttributes.addAttribute("username", user.getUsername());
-//            redirectAttributes.addAttribute("firstname", user.getFirstname());
-//            redirectAttributes.addFlashAttribute("user", user);
-//            return "redirect:/users/registration";
-//        }
+    public String create(@ModelAttribute @Validated UserCreateEditDto user,
+                         BindingResult bindingResult, // должен идти сразу после Validation объекта, в ином случае это работать не будет
+                         RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("user", user);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            return "redirect:/users/registration";
+        }
         return "redirect:/users/" + userService.create(user).getId();
     }
 
@@ -74,7 +74,7 @@ public class UserController {
     //    @PutMapping("/{id}")
     @PostMapping("/{id}/update")
     public String update(@PathVariable("id") Long id,
-                         @ModelAttribute UserCreateEditDto user){
+                         @ModelAttribute @Validated UserCreateEditDto user){
         return userService.update(id, user)
                 .map(it -> "redirect:/users/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
