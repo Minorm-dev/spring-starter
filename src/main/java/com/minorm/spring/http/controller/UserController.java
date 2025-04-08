@@ -5,6 +5,9 @@ import com.minorm.spring.dto.UserCreateEditDto;
 import com.minorm.spring.dto.UserFilter;
 import com.minorm.spring.service.CompanyService;
 import com.minorm.spring.service.UserService;
+import com.minorm.spring.validation.group.CreateAction;
+import com.minorm.spring.validation.group.UpdateAction;
+import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -59,7 +62,7 @@ public class UserController {
 
     @PostMapping
 //    @ResponseStatus(HttpStatus.CREATED)
-    public String create(@ModelAttribute @Validated UserCreateEditDto user,
+    public String create(@ModelAttribute @Validated({Default.class, CreateAction.class}) UserCreateEditDto user,
                          BindingResult bindingResult, // должен идти сразу после Validation объекта, в ином случае это работать не будет
                          RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
@@ -74,7 +77,7 @@ public class UserController {
     //    @PutMapping("/{id}")
     @PostMapping("/{id}/update")
     public String update(@PathVariable("id") Long id,
-                         @ModelAttribute @Validated UserCreateEditDto user){
+                         @ModelAttribute @Validated({Default.class, UpdateAction.class}) UserCreateEditDto user){
         return userService.update(id, user)
                 .map(it -> "redirect:/users/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
