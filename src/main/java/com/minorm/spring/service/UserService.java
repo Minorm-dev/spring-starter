@@ -1,13 +1,17 @@
 package com.minorm.spring.service;
 
+import com.minorm.spring.database.entity.User;
 import com.minorm.spring.database.repository.UserRepository;
 import com.minorm.spring.dto.UserCreateEditDto;
 import com.minorm.spring.dto.UserFilter;
 import com.minorm.spring.dto.UserReadDto;
 import com.minorm.spring.mapper.UserCreateEditMapper;
 import com.minorm.spring.mapper.UserReadMapper;
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,11 +27,41 @@ public class UserService {
     private final UserReadMapper userReadMapper;
     private final UserCreateEditMapper userCreateEditMapper;
 
-    public List<UserReadDto> findAll(UserFilter filter) {
-//        userRepository.findAll();
-        return userRepository.findAllByFilter(filter).stream()
-                .map(userReadMapper::map)
-                .toList();
+    public Page<UserReadDto> findAll(UserFilter filter, Pageable pageable) {
+        Specification<User> spec = (root, query, criteriaBuilder) -> {
+            Predicate predicate = criteriaBuilder.conjunction();
+
+            if (filter.firstname() != null && !filter.firstname().isEmpty()) {
+                predicate = criteriaBuilder.and(
+                        predicate, criteriaBuilder.like(
+                                criteriaBuilder.lower(root.get("firstname")),
+                                "%" + filter.firstname().toLowerCase() + "%"
+                        )
+                );
+            }
+
+            if (filter.lastname() != null && !filter.lastname().isEmpty()) {
+                predicate = criteriaBuilder.and(
+                        predicate, criteriaBuilder.like(
+                                criteriaBuilder.lower(root.get("lastname")),
+                                "%" + filter.lastname().toLowerCase() + "%"
+                        )
+                );
+            }
+
+            if (filter.birthDate() != null) {
+                predicate = criteriaBuilder.and(
+                        predicate, criteriaBuilder.lessThanOrEqualTo(
+                                root.get("birthDate"), filter.birthDate()
+                        )
+                );
+            }
+
+            return predicate;
+        };
+
+        return userRepository.findAll(spec, pageable)
+                .map(userReadMapper::map);
     }
 
     public List<UserReadDto> findAll() {

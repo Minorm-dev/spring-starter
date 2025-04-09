@@ -19,8 +19,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends
         JpaRepository<User, Long>,
+        JpaSpecificationExecutor<User>,
         FilterUserRepository,
-        RevisionRepository<User, Long, Integer>{
+        RevisionRepository<User, Long, Integer> {
 //        QuerydslPredicateExecutor<User>
 
     @Query("select u from User u " +
