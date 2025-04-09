@@ -3,13 +3,12 @@ package com.minorm.spring.dto;
 import com.minorm.spring.database.entity.Role;
 import com.minorm.spring.validation.UserInfo;
 import com.minorm.spring.validation.group.CreateAction;
-import com.minorm.spring.validation.group.UpdateAction;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Value;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -33,4 +32,6 @@ public class UserCreateEditDto {
     Role role;
 
     Integer companyId;
+
+    MultipartFile image;
 }
