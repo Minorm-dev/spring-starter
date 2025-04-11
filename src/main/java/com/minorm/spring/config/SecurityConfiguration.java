@@ -10,7 +10,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.security.config.Customizer.withDefaults;
+import static com.minorm.spring.database.entity.Role.ADMIN;
 
 @Configuration
 public class SecurityConfiguration {
@@ -18,11 +18,13 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // новый способ отключения CSRF
-                .authorizeHttpRequests(auth ->
-                        auth.anyRequest().authenticated()
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login", "users/registration", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers("/users/*/delete").hasAuthority(ADMIN.getAuthority())
+                        .requestMatchers("/admin/**").hasAuthority(ADMIN.getAuthority())
+                        .anyRequest().authenticated()
                 )
-//                .httpBasic(withDefaults());
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login")
@@ -31,7 +33,6 @@ public class SecurityConfiguration {
                         form
                                 .loginPage("/login")
                                 .defaultSuccessUrl("/users", true)
-                                .permitAll()
                 );
         return http.build();
     }
