@@ -4,6 +4,7 @@ import com.minorm.spring.database.entity.Role;
 import com.minorm.spring.validation.UserInfo;
 import com.minorm.spring.validation.group.CreateAction;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Value;
 import lombok.experimental.FieldNameConstants;
@@ -20,11 +21,13 @@ public class UserCreateEditDto {
     @Email
     String username;
 
+    @NotBlank(groups = CreateAction.class)
+    String rawPassword;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate birthDate;
 
     @Size(min = 3, max = 64)
-    // @NotNull лучше не использовать над строками
     String firstname;
 
     String lastname;
