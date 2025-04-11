@@ -6,6 +6,7 @@ import com.minorm.spring.integration.IntegrationTestBase;
 import com.minorm.spring.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
 
 import java.time.LocalDate;
 
@@ -37,11 +38,13 @@ public class UserServiceIT extends IntegrationTestBase {
     void create() {
         UserCreateEditDto userDto = new UserCreateEditDto(
                 "test@gmail.com",
+                "test",
                 LocalDate.now(),
                 "Test",
                 "Test",
                 Role.ADMIN,
-                COMPANY_ID
+                COMPANY_ID,
+                new MockMultipartFile("test", new byte[0])
         );
         var actualResult = userService.create(userDto);
         assertEquals(userDto.getUsername(), actualResult.getUsername());
@@ -56,11 +59,13 @@ public class UserServiceIT extends IntegrationTestBase {
     void update() {
         UserCreateEditDto userDto = new UserCreateEditDto(
                 "test@gmail.com",
+                "test",
                 LocalDate.now(),
                 "Test",
                 "Test",
                 Role.ADMIN,
-                COMPANY_ID
+                COMPANY_ID,
+                new MockMultipartFile("test", new byte[0])
         );
         var actualResult = userService.update(USER_ID, userDto);
         assertTrue(actualResult.isPresent());
