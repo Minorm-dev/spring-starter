@@ -20,6 +20,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth ->
                         auth.anyRequest().authenticated()
                 )
+//                .httpBasic(withDefaults()); // закодирование пароля и логина
                 .formLogin(form ->
                         form
                                 .loginPage("/login")
