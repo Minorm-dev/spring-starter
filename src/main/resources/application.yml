@@ -58,3 +58,12 @@ logging:
     root: INFO
     com.minorm.spring.database.pool.ConnectionPool: INFO
     org.springframework.jdbc.core: TRACE
+
+
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: 444618376803-t25mkqkbv7mcjacagj444eaua3hrgb7q.apps.googleusercontent.com
+      client-secret: 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
+      scopes: openid,email,profile
+    oauth2-redirect-url: http://localhost:8080/swagger-ui/oauth2-redirect.html
