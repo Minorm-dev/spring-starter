@@ -23,6 +23,10 @@ public class SecurityConfiguration {
                         auth.anyRequest().authenticated()
                 )
 //                .httpBasic(withDefaults());
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                        .deleteCookies("JSESSIONID"))
                 .formLogin(form ->
                         form
                                 .loginPage("/login")
