@@ -4,28 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Aspect
 @Component
+@Order(value = 1)
 public class FirstAspect {
-
-    /*
-        @ - Все помеченное так, используется с аннотациями, без нее надо указывать класс
-        @within - check annotation on the class level
-     */
-    @Pointcut("@within(org.springframework.stereotype.Controller)")
-    public void isControllerLayer() {
-    }
-
-    /*
-        within - check class type name
-     */
-    @Pointcut("within(com.minorm.spring.service.*Service)")
-    public void isServiceLayer() {
-    }
 
     /*
         this - check AOP proxy class type
@@ -39,7 +26,7 @@ public class FirstAspect {
     /*
         @annotation - check annotation on method level
      */
-    @Pointcut("isControllerLayer() && @annotation(org.springframework.web.bind.annotation.GetMapping)")
+    @Pointcut("com.minorm.spring.aop.CommonPointcuts.isControllerLayer() && @annotation(org.springframework.web.bind.annotation.GetMapping)")
     public void hasGetMapping() {
     }
 
@@ -48,7 +35,7 @@ public class FirstAspect {
         * - any param type
         .. - 0+ any params type
      */
-    @Pointcut("isControllerLayer() && args(org.springframework.ui.Model,..)")
+    @Pointcut("com.minorm.spring.aop.CommonPointcuts.isControllerLayer() && args(org.springframework.ui.Model,..)")
     public void hasModelParam() {
     }
 
@@ -57,7 +44,7 @@ public class FirstAspect {
         * - any param type
         .. - 0+ any params type
      */
-    @Pointcut("isControllerLayer() && @args(com.minorm.spring.validation.UserInfo,..)")
+    @Pointcut("com.minorm.spring.aop.CommonPointcuts.isControllerLayer() && @args(com.minorm.spring.validation.UserInfo,..)")
     public void hasUserInfoParamAnnotation() {
     }
 
@@ -119,22 +106,5 @@ public class FirstAspect {
         log.info("finally - invoked findById method in class {}", service);
     }
 
-    @Around("anyFindByIdServiceMethod() && target(service) && args(id)")
-    public Object addLoggingAround(ProceedingJoinPoint joinPoint,
-                                   Object service,
-                                   Object id) throws Throwable {
-        log.info("AROUND before - invoked findById method in class {}, with id {}", service, id);
-        try {
-            Object result = joinPoint.proceed();
-            log.info("AROUND after returning - invoked findById method in class {}, result {}", service, result);
-            return result;
-        } catch (Throwable ex) {
-            log.info("AROUND after throwing - invoked findById method in class {}, exception {}: {}", service, ex.getClass(), ex.getMessage());
-            throw ex;
-        }
-        finally {
-            log.info("AROUND finally - invoked findById method in class {}", service);
-        }
-    }
 
 }
