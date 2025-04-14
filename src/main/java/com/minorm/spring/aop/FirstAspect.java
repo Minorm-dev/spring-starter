@@ -1,10 +1,12 @@
 package com.minorm.spring.aop;
 
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Aspect
@@ -16,14 +18,14 @@ public class FirstAspect {
         @within - check annotation on the class level
      */
     @Pointcut("@within(org.springframework.stereotype.Controller)")
-    public void isControllerLayer(){
+    public void isControllerLayer() {
     }
 
     /*
         within - check class type name
      */
     @Pointcut("within(com.minorm.spring.service.*Service)")
-    public void isServiceLayer(){
+    public void isServiceLayer() {
     }
 
     /*
@@ -32,7 +34,7 @@ public class FirstAspect {
      */
     @Pointcut("this(org.springframework.data.repository.Repository)")
 //    @Pointcut("target(org.springframework.data.repository.Repository)")
-    public void isRepositoryLayer(){
+    public void isRepositoryLayer() {
     }
 
     /*
@@ -48,7 +50,7 @@ public class FirstAspect {
         .. - 0+ any params type
      */
     @Pointcut("isControllerLayer() && args(org.springframework.ui.Model,..)")
-    public void hasModelParam(){
+    public void hasModelParam() {
     }
 
     /*
@@ -57,7 +59,7 @@ public class FirstAspect {
         .. - 0+ any params type
      */
     @Pointcut("isControllerLayer() && @args(com.minorm.spring.validation.UserInfo,..)")
-    public void hasUserInfoParamAnnotation(){
+    public void hasUserInfoParamAnnotation() {
     }
 
     /*
@@ -74,9 +76,28 @@ public class FirstAspect {
     public void anyFindByIdServiceMethod() {
     }
 
-    @Before("anyFindByIdServiceMethod()")
+    /*
+        Can be used as params:
+        - args
+        - this
+        - target
+        - @args
+        - @target
+        - @within
+        - @annotation
+     */
+    @Before(value = "anyFindByIdServiceMethod() " +
+                    "&& args(id) " +
+                    "&& target(service) " +
+                    "&& this(serviceProxy)" +
+                    "&& @within(transactional)",
+                    argNames = "joinPoint,id,service,serviceProxy,transactional")
 //    @Before("execution(public * com.minorm.spring.service.*Service.findById(*))")
-    public void addLogging(){
-        log.info("invoked findById method");
+    public void addLogging(JoinPoint joinPoint, // JoinPoint должен быть первым параметром, если он нужен
+                           Object id,
+                           Object service,
+                           Object serviceProxy,
+                           Transactional transactional) {
+        log.info("invoked findById method in class {}, with id {}", service, id);
     }
 }
