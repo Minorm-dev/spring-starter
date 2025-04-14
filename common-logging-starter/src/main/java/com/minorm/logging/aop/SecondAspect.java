@@ -1,4 +1,4 @@
-package com.minorm.spring.aop;
+package com.minorm.logging.aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -9,11 +9,9 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Aspect
-@Component
-@Order(value = 2)
 public class SecondAspect {
 
-    @Around("com.minorm.spring.aop.FirstAspect.anyFindByIdServiceMethod() && target(service) && args(id)")
+    @Around("com.minorm.logging.aop.FirstAspect.anyFindByIdServiceMethod() && target(service) && args(id)")
     public Object addLoggingAround(ProceedingJoinPoint joinPoint,
                                    Object service,
                                    Object id) throws Throwable {

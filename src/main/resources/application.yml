@@ -19,6 +19,11 @@ db:
     - size: 3
       timeout: 3
 spring.profiles.active: qa
+
+app.common.logging:
+  enabled: true
+  level: INFO
+
 spring:
   mvc:
 #    format:
